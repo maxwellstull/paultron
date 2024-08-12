@@ -101,7 +101,15 @@ async def audit_reactions(channel):
     total_emoji = appy.servers[str(channel.guild.id)].summarize_reactions()
     sorted_emoji = sorted(total_emoji.keys(), key= lambda k: total_emoji[k], reverse=True)
 
-    
+    first, second, third = sorted_emoji[0], sorted_emoji[1], sorted_emoji[2]
+
+    if not isinstance(first, str):
+        first = str(client.get_emoji(first))
+    if not isinstance(second, str):
+        second = str(client.get_emoji(second))
+    if not isinstance(third, str):
+        third = str(client.get_emoji(third))
+
     await channel.send("""
 Yapper Leaderboard for {name}
                        
@@ -110,9 +118,9 @@ Yapper Leaderboard for {name}
 3rd - {third} with {ct3} yaps
                        
                        """.format(name=appy.servers[str(channel.guild.id)].name,
-                       first=sorted_emoji[0], ct1=total_emoji[sorted_emoji[0]],
-                       second=sorted_emoji[1], ct2=total_emoji[sorted_emoji[1]],
-                       third=sorted_emoji[2], ct3=total_emoji[sorted_emoji[2]],
+                       first=first, ct1=total_emoji[sorted_emoji[0]],
+                       second=second, ct2=total_emoji[sorted_emoji[1]],
+                       third=third, ct3=total_emoji[sorted_emoji[2]],
                        
                        ))
 
